@@ -1,4 +1,3 @@
-import json
 from Agent1 import agent_plan
 from Agent2 import agent_research
 from Agent3 import agent_teach
@@ -25,10 +24,10 @@ def clean_chapters(plan_text):
 
 
 def generate_course(topic):
-    print("📌 规划课程结构...")
+    # print("📌 规划课程结构...")
     plan = agent_plan(topic)
 
-    print("\n📊 课程结构：\n", plan)
+    # print("\n📊 课程结构：\n", plan)
 
     chapters = clean_chapters(plan)
 
@@ -39,7 +38,7 @@ def generate_course(topic):
     cache = {}  # 🔥 避免重复检索
 
     for ch in chapters:
-        print(f"\n🔍 检索：{ch}")
+        # print(f"\n🔍 检索：{ch}")
 
         if ch in cache:
             knowledge = cache[ch]
@@ -47,7 +46,7 @@ def generate_course(topic):
             knowledge = agent_research(ch,topic)
             cache[ch] = knowledge
 
-        print(f"📘 生成教案：{ch}")
+        # print(f"📘 生成教案：{ch}")
         lesson = agent_teach(topic,ch, knowledge,history,chapters)
         lesson = clean_text(lesson)
         lesson = agent_plus(topic, ch, lesson)
@@ -61,14 +60,14 @@ def generate_course(topic):
         }
 
     # ✅ 保存 txt
-    with open("course.txt", "w", encoding="utf-8") as f:
-        f.write(full_course)
-
+    # with open("course.txt", "w", encoding="utf-8") as f:
+    #     f.write(full_course)
+    #
     # ✅ 保存 json（关键）
-    with open("course.json", "w", encoding="utf-8") as f:
-        json.dump(course_dict, f, ensure_ascii=False, indent=2)
-
-    print("\n✅ 已保存：course.txt + course.json")
+    # with open("course.json", "w", encoding="utf-8") as f:
+    #     json.dump(course_dict, f, ensure_ascii=False, indent=2)
+    #
+    # print("\n✅ 已保存：course.txt + course.json")
 
     return full_course
 
